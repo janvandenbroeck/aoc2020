@@ -1,0 +1,15 @@
+from itertools import combinations
+with open('input.txt') as f:
+    nrs = [int(l) for l in f.readlines() if len(l) > 1]
+
+preamble = 25
+for i in range(preamble, len(nrs)):
+    if nrs[i] not in (a+b for a,b in combinations(nrs[i-preamble:i], 2)):
+        invalid = nrs[i]
+        place_invalid = i
+        break
+
+for i in range(place_invalid):
+    for j in range(i+1, place_invalid):
+        if sum(nrs[i:j]) == invalid:
+            print(min(nrs[i:j]) + max(nrs[i:j]))
